@@ -20,7 +20,6 @@ from unzip_files import unzip_all
 # Error handling if: no directory with .srt files found, .docx being saved to is in use
 
 #rejection pattern matches
-#valid_lines = re.compile(r'[a-z|A-Z|/.$]') # has letters in the line or ends in a period
 valid_lines = re.compile(r'[a-z|A-Z]|/.$') # has letters in the line or ends in a period
 
 def clean_files(file_directory):
@@ -32,8 +31,7 @@ def clean_files(file_directory):
     doc = docx.Document()  # creates document object that will receive all the srt lines
     doc_master = docx.Document()
     
-	# toc_link = "###### [CONTENTS](#CONTENTS)\n" # table of contents
-	# mark down toc code
+	# toc_link = "###### [CONTENTS](#CONTENTS)\n" # table of contents for markdown files
     toc_link = ""
     
     count = 0
@@ -42,7 +40,8 @@ def clean_files(file_directory):
         try:
             if file_name.endswith('.srt'):
                 count += 1
-                input_file = codecs.open(file_name, encoding='utf-8')  # https://docs.python.org/2.7/howto/unicode.html
+                input_file = codecs.open(file_name, encoding='utf-8')  
+				# https://docs.python.org/2.7/howto/unicode.html
                 work_space = input_file.readlines()
             else: continue
     
@@ -52,22 +51,20 @@ def clean_files(file_directory):
             
             file_header = '\n'+'## '+ str(file_name)[:-4] + str(toc_anchor) + toc_entry + toc_link
             # str(file_name)[:-4] removes file extension to create h2 title
-            
-			# print file_header
+			
             doc.add_heading(file_header, 5) # adds file_header with word heading level 5
             txt_paragraph = ''              # creates an empty string that will receive each line of srt data
 
-			# paragraph = doc
             paragraph = doc.add_paragraph() # add blank paragraph to doc to separate different srt files
     
             for line in work_space:
                 if not re.search(valid_lines, line): continue # skips lines we don't want
                 else: txt_paragraph += line.replace('\r', '').replace('\n', '').replace('>>', '') + ' ' 
-                    # .strip('>>')
-                    # what makes it into doc
-                    # creates paragraph that will later be added to doc
-                    # take all new line characters out \r and \n (two types related to windows OS), 
-                    # then adds a space at the end
+				# .strip('>>')
+				# what makes it into doc
+				# creates paragraph that will later be added to doc
+				# take all new line characters out \r and \n (two types related to windows OS), 
+				# then adds a space at the end
             paragraph.add_run(txt_paragraph.replace('  ',' '))
             input_file.close() # closes srt file being used so program can open another one
             
