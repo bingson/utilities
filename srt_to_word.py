@@ -56,6 +56,7 @@ def clean_files(file_directory):
 			# print file_header
             doc.add_heading(file_header, 5) # adds file_header with word heading level 5
             txt_paragraph = ''              # creates an empty string that will receive each line of srt data
+
 			# paragraph = doc
             paragraph = doc.add_paragraph() # add blank paragraph to doc to separate different srt files
     
