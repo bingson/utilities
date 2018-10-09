@@ -18,7 +18,6 @@ from unzip_files import unzip_all
 # switch to logging over print
 # text files for a single directory contain
 
-
 #rejection pattern matches
 #valid_lines = re.compile(r'[a-z|A-Z|/.$]') # has letters in the line or ends in a period
 valid_lines = re.compile(r'[a-z|A-Z]|/.$') # has letters in the line or ends in a period
@@ -33,7 +32,7 @@ def clean_files(file_directory):
     doc_master = docx.Document()
     
     
-#    toc_link = "###### [CONTENTS](#CONTENTS)\n" # table of contents
+	# toc_link = "###### [CONTENTS](#CONTENTS)\n" # table of contents
     toc_link = ""
     
     count = 0
@@ -53,10 +52,10 @@ def clean_files(file_directory):
             file_header = '\n'+'## '+ str(file_name)[:-4] + str(toc_anchor) + toc_entry + toc_link
             # str(file_name)[:-4] removes file extension to create h2 title
             
-#           print file_header
+			# print file_header
             doc.add_heading(file_header, 5) # adds file_header with word heading level 5
             txt_paragraph = ''              # creates an empty string that will receive each line of srt data
-#            paragraph = doc
+			# paragraph = doc
             paragraph = doc.add_paragraph() # add blank paragraph to doc to separate different srt files
     
             for line in work_space:
